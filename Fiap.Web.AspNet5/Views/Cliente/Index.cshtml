@@ -1,0 +1,28 @@
+﻿@model IList<ClienteModel>
+
+
+<h1>Clientes</h1>
+
+@if (! String.IsNullOrEmpty((String) TempData["Mensagem"]))
+{
+    <div class=" alert alert-warning" role="alert">@TempData["Mensagem"]</div>
+}
+
+<p class="toolbar">
+    <a class="create btn btn-dark" asp-controller="Cliente" asp-action="Novo">Novo Cliente</a>
+</p>
+
+
+<table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th data-field="id">Id</th>
+            <th data-field="name">Nome</th>
+            <th data-field="sobrenome">Sobrenome</th>
+            <th class="actions" width="220">Ações</th>
+        </tr>
+    </thead>
+    
+    <partial name="_ClienteItem" model="Model"></partial>
+
+</table>
