@@ -21,7 +21,7 @@ namespace Fiap.Web.AspNet5.Controllers
         }
 
         // GET: Representante
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var listaRepresentantes = representanteRepository.FindAll();
 
