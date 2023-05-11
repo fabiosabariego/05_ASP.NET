@@ -33,6 +33,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label">Representante</label>
+                        <select class="form-control col-5" name="RepresentanteId">
+                            <option value="0" disabled selected>Selecione o Representante</option>
+                            @foreach (var rep in ViewBag.Representantes)
+                            {
+                                <option value="@rep.RepresentanteId">@rep.NomeRepresentante</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label">Observação</label>
                         <textarea class="form-control" name="Observacao">@Model.Observacao</textarea>
                     </div>

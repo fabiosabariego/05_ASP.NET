@@ -1,55 +1,35 @@
-﻿using Fiap.Web.AspNet5.Models;
+﻿using Fiap.Web.AspNet5.Data;
+using Fiap.Web.AspNet5.Models;
+using Fiap.Web.AspNet5.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Web.AspNet5.Controllers
 {
     public class ClienteController : Controller
     {
+        private readonly ClienteRepository clienteRepository;
+        private readonly RepresentanteRepository representanteRepository;
+
+        public ClienteController(DataContext context)               // Criando o Construtor para receber o DataContext
+        {
+            clienteRepository = new ClienteRepository(context);
+            representanteRepository = new RepresentanteRepository(context);
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            var listaClientes = new List<ClienteModel>();
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 1,
-                Nome = "Flávio",
-                Email = "fmoreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS1"
-            });
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 2,
-                Nome = "Eduardo",
-                Email = "eduardo@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS3"
-            });
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 3,
-                Nome = "Moreni",
-                Email = "moreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS3"
-            });
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 4,
-                Nome = "Luan",
-                Email = "luan@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS4"
-            });
-
-            return View(listaClientes);
+            //var listaClientes = clienteRepository.FindAll();
             
+            return View(clienteRepository.FindAllWithRepresentante());               // Desta Forma o Codigo fica mais enxuto
         }
 
 
         [HttpGet]       //Consumir, abrir coisas
         public IActionResult Novo()
         {
+
+            ViewBag.Representantes = representanteRepository.FindAll();
 
             return View(new ClienteModel());
 
@@ -67,6 +47,8 @@ namespace Fiap.Web.AspNet5.Controllers
             }
             else
             {
+                clienteRepository.Insert(clienteModel);
+
                 TempData["Mensagem"] = $"Cliente {clienteModel.Nome} {clienteModel.Sobrenome} cadastrado com Sucesso!!";
                 return RedirectToAction("Index", "Cliente");
             }
@@ -113,16 +95,8 @@ namespace Fiap.Web.AspNet5.Controllers
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-           var clienteModel = new ClienteModel
-            {
-                ClienteId = 1,
-                Nome = "Flavio",
-                Email = "fmoreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS1"
-            };
 
-            return View(clienteModel);
+            return View(clienteRepository.FindByIdWithRepresentante(id));
         }
 
         [HttpPost]
