@@ -12,44 +12,51 @@
                 }
 
                 <form asp-controller="Cliente" asp-action="Novo" method="post">
-                    <div class="form-group">
-                        <label class="control-label">Nome</label>
-                        <input class="form-control col-5" name="Nome" value="@Model.Nome" />
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Nome</label>
+                    <input class="form-control col-5" name="Nome" value="@Model.Nome" />
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Sobrenome</label>
-                        <input class="form-control col-5" name="Sobrenome" value="@Model.Sobrenome" required />
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Sobrenome</label>
+                    <input class="form-control col-5" name="Sobrenome" value="@Model.Sobrenome" required />
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Email</label>
-                        <input class="form-control col-5" name="Email" value="@Model.Email" required />
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input class="form-control col-5" name="Email" value="@Model.Email" required />
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Data Nascimento</label>
-                        <input type="date" class="form-control col-5" name="DataNascimento" value="@Model.DataNascimento" required />
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">Data Nascimento</label>
+                    <input type="date" class="form-control col-5" name="DataNascimento" value="@Model.DataNascimento" required />
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Representante</label>
-                        <select class="form-control col-5" name="RepresentanteId">
-                            <option value="0" disabled selected>Selecione o Representante</option>
+                <div class="form-group">
+                    <label class="control-label">Representante</label>
+                    <select class="form-control col-5" name="RepresentanteId">
+                            @if (!String.IsNullOrEmpty(ViewBag.Mensagem))
+                            {
+                                <option value="@Model.RepresentanteId">@Model.Representante.NomeRepresentante</option>
+                            }
+                            else
+                            {
+                                <option value="0" disabled selected>Selecione o Representante</option>
+                            }
                             @foreach (var rep in ViewBag.Representantes)
                             {
                                 <option value="@rep.RepresentanteId">@rep.NomeRepresentante</option>
                             }
-                        </select>
-                    </div>
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Observação</label>
-                        <textarea class="form-control" name="Observacao">@Model.Observacao</textarea>
-                    </div>
-
-                    <a class="btn btn-default btn-lg" asp-controller="Cliente" asp-action="Index">Cancelar</a>
-                    <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+                <div class="form-group">
+                    <label class="control-label">Observação</label>
+                    <textarea class="form-control" name="Observacao">@Model.Observacao</textarea>
+                </div>
+                                
+                <a class="btn btn-default btn-lg" asp-controller="Cliente" asp-action="Index">Cancelar</a>
+                <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
                 </form>
             </div>
         </div>

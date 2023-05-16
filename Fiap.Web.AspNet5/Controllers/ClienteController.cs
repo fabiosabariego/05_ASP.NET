@@ -43,7 +43,11 @@ namespace Fiap.Web.AspNet5.Controllers
              if (String.IsNullOrEmpty(clienteModel.Nome))
             {
                 ViewBag.Mensagem = $"O Campo Nome deve ser preenchido!";
-                return View(clienteModel);
+                
+                var rep = representanteRepository.FindById(clienteModel.RepresentanteId);   // Busca no banco pelo ID qual representante foi selecionado no FrontEnd
+                clienteModel.Representante = rep;                                           // Passa para o clientModel os dados do representante, para que possa ser mostrado na tela
+                ViewBag.Representantes = representanteRepository.FindAll();                 // Coleta todos os representantes para popular o combobox
+                return View(clienteModel);                                                  // Retorna para tela todos os dados preenchidos para visualizar
             }
             else
             {
