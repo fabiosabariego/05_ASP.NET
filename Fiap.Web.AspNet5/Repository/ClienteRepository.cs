@@ -126,5 +126,12 @@ namespace Fiap.Web.AspNet5.Repository
             return clienteModel.ClienteId;
 
         }
+
+        // Criando Metodo Update
+        public void Update(ClienteModel clienteModel)
+        {
+            dataContext.Clientes.Update(clienteModel);
+            dataContext.SaveChanges();
+        }
     }
 }
