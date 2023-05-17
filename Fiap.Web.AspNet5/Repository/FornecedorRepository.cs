@@ -1,10 +1,11 @@
 ﻿using Fiap.Web.AspNet5.Data;
 using Fiap.Web.AspNet5.Models;
+using Fiap.Web.AspNet5.Repository.Interface;
 using System.Drawing;
 
 namespace Fiap.Web.AspNet5.Repository
 {
-    public class FornecedorRepository       //Classe do tipo Repository usada para conexão com o Banco de Dados
+    public class FornecedorRepository :IFornecedorRepository       //Classe do tipo Repository usada para conexão com o Banco de Dados
     {
         //      CRUD
         // Find By Id (Read)

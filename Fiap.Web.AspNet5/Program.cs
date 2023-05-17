@@ -1,4 +1,6 @@
 using Fiap.Web.AspNet5.Data;
+using Fiap.Web.AspNet5.Repository;
+using Fiap.Web.AspNet5.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet5
@@ -17,10 +19,15 @@ namespace Fiap.Web.AspNet5
             // Condições Adicionadas na Aula para conectar ao Banco
             var connectionString = builder.Configuration.GetConnectionString("databaseUrl");
             builder.Services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(connectionString).EnableSensitiveDataLogging(true)
-            );
+                options.UseSqlServer(connectionString).EnableSensitiveDataLogging(true));
             // ****************************************************************************
 
+            // ****************************************************************************
+            // Injecao de Dependencias
+            builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+            builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            builder.Services.AddScoped<IRepresentanteRepository, RepresentanteRepository>();
+            // ****************************************************************************
 
             var app = builder.Build();
 

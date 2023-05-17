@@ -1,10 +1,11 @@
 ﻿using Fiap.Web.AspNet5.Data;
 using Fiap.Web.AspNet5.Models;
+using Fiap.Web.AspNet5.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet5.Repository
 {
-    public class ClienteRepository
+    public class ClienteRepository : IClienteRepository
     {
 
         //      CRUD

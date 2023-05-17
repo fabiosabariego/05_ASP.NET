@@ -1,9 +1,10 @@
 ﻿using Fiap.Web.AspNet5.Data;
 using Fiap.Web.AspNet5.Models;
+using Fiap.Web.AspNet5.Repository.Interface;
 
 namespace Fiap.Web.AspNet5.Repository
 {
-    public class RepresentanteRepository
+    public class RepresentanteRepository : IRepresentanteRepository
     {
         //      CRUD
         // Find By Id (Read)

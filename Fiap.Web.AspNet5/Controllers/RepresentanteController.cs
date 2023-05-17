@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Fiap.Web.AspNet5.Data;
 using Fiap.Web.AspNet5.Models;
 using Fiap.Web.AspNet5.Repository;
+using Fiap.Web.AspNet5.Repository.Interface;
 
 namespace Fiap.Web.AspNet5.Controllers
 {
     public class RepresentanteController : Controller
     {
-        private readonly RepresentanteRepository representanteRepository;
+        private readonly IRepresentanteRepository representanteRepository;
 
-        public RepresentanteController(DataContext context)
+        public RepresentanteController(IRepresentanteRepository _representanteRepository)
         {
-            representanteRepository = new RepresentanteRepository(context);
+            representanteRepository = _representanteRepository;
         }
 
         // GET: Representante
