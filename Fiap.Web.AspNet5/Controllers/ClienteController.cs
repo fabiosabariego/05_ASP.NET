@@ -2,6 +2,7 @@
 using Fiap.Web.AspNet5.Models;
 using Fiap.Web.AspNet5.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.AspNet5.Controllers
 {
@@ -19,8 +20,7 @@ namespace Fiap.Web.AspNet5.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //var listaClientes = clienteRepository.FindAll();
-            
+            var lista = clienteRepository.FindByNomeAndEmailAndRepresentante("", "", 3);
             return View(clienteRepository.FindAllWithRepresentante());               // Desta Forma o Codigo fica mais enxuto
         }
 
@@ -29,8 +29,7 @@ namespace Fiap.Web.AspNet5.Controllers
         public IActionResult Novo()
         {
 
-            ViewBag.Representantes = representanteRepository.FindAll();
-
+            ComboRepresentantes();
             return View(new ClienteModel());
 
         }
@@ -43,10 +42,8 @@ namespace Fiap.Web.AspNet5.Controllers
              if (String.IsNullOrEmpty(clienteModel.Nome))
             {
                 ViewBag.Mensagem = $"O Campo Nome deve ser preenchido!";
-                
-                var rep = representanteRepository.FindById(clienteModel.RepresentanteId);   // Busca no banco pelo ID qual representante foi selecionado no FrontEnd
-                clienteModel.Representante = rep;                                           // Passa para o clientModel os dados do representante, para que possa ser mostrado na tela
-                ViewBag.Representantes = representanteRepository.FindAll();                 // Coleta todos os representantes para popular o combobox
+
+                ComboRepresentantes();                                                      // Coleta todos os representantes para popular o combobox
                 return View(clienteModel);                                                  // Retorna para tela todos os dados preenchidos para visualizar
             }
             else
@@ -117,6 +114,13 @@ namespace Fiap.Web.AspNet5.Controllers
 
             TempData["Mensagem"] = $"O cliente foi removido com sucesso!";
             return RedirectToAction("Index", "Cliente");
+        }
+
+        private void ComboRepresentantes()
+        {
+            var listaRepresentante = representanteRepository.FindAll();
+            var selectListaRepresentante = new SelectList(listaRepresentante, "RepresentanteId", "NomeRepresentante");
+            ViewBag.Representantes = selectListaRepresentante;
         }
 
     }

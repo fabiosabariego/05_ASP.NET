@@ -34,19 +34,8 @@
 
                 <div class="form-group">
                     <label class="control-label">Representante</label>
-                    <select class="form-control col-5" name="RepresentanteId">
-                            @if (!String.IsNullOrEmpty(ViewBag.Mensagem))
-                            {
-                                <option value="@Model.RepresentanteId">@Model.Representante.NomeRepresentante</option>
-                            }
-                            else
-                            {
-                                <option value="0" disabled selected>Selecione o Representante</option>
-                            }
-                            @foreach (var rep in ViewBag.Representantes)
-                            {
-                                <option value="@rep.RepresentanteId">@rep.NomeRepresentante</option>
-                            }
+                    <select class="form-control col-5" asp-items="@ViewBag.Representantes" asp-for="RepresentanteId">
+                            <option value="0" disabled selected>Selecione o Representante</option>
                     </select>
                 </div>
 
