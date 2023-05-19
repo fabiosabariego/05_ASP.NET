@@ -1,49 +1,28 @@
-﻿using Fiap.Web.AspNet5.Models;
+﻿using Fiap.Web.AspNet5.Data;
+using Fiap.Web.AspNet5.Models;
+using Fiap.Web.AspNet5.Repository;
+using Fiap.Web.AspNet5.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fiap.Web.AspNet5.Controllers
 {
     public class ClienteController : Controller
     {
+        private readonly IClienteRepository clienteRepository;
+        private readonly IRepresentanteRepository representanteRepository;
+
+        public ClienteController(IClienteRepository _clienteRepository, IRepresentanteRepository _representanteRepository)               // Criando o Construtor para receber o DataContext
+        {
+            clienteRepository = _clienteRepository;
+            representanteRepository = _representanteRepository;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            var listaClientes = new List<ClienteModel>();
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 1,
-                Nome = "Flávio",
-                Email = "fmoreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS1"
-            });
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 2,
-                Nome = "Eduardo",
-                Email = "eduardo@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS3"
-            });
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 3,
-                Nome = "Moreni",
-                Email = "moreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS3"
-            });
-            listaClientes.Add(new ClienteModel
-            {
-                ClienteId = 4,
-                Nome = "Luan",
-                Email = "luan@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS4"
-            });
-
-            return View(listaClientes);
-            
+            //var lista = clienteRepository.FindByNomeAndEmailAndRepresentante("", "", 3);
+            return View(clienteRepository.FindAllWithRepresentante());               // Desta Forma o Codigo fica mais enxuto
         }
 
 
@@ -51,6 +30,7 @@ namespace Fiap.Web.AspNet5.Controllers
         public IActionResult Novo()
         {
 
+            ComboRepresentantes();
             return View(new ClienteModel());
 
         }
@@ -63,10 +43,14 @@ namespace Fiap.Web.AspNet5.Controllers
              if (String.IsNullOrEmpty(clienteModel.Nome))
             {
                 ViewBag.Mensagem = $"O Campo Nome deve ser preenchido!";
-                return View(clienteModel);
+
+                ComboRepresentantes();                                                      // Coleta todos os representantes para popular o combobox
+                return View(clienteModel);                                                  // Retorna para tela todos os dados preenchidos para visualizar
             }
             else
             {
+                clienteRepository.Insert(clienteModel);
+
                 TempData["Mensagem"] = $"Cliente {clienteModel.Nome} {clienteModel.Sobrenome} cadastrado com Sucesso!!";
                 return RedirectToAction("Index", "Cliente");
             }
@@ -76,17 +60,8 @@ namespace Fiap.Web.AspNet5.Controllers
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            
-            var clienteModel = new ClienteModel
-            {   
-                ClienteId = 1,
-                Nome = "Flávio",
-                Email = "fmoreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS1" 
-            };
-
-            return View(clienteModel);
+            ComboRepresentantes();
+            return View(clienteRepository.FindById(id));
 ;        }
 
         [HttpPost]
@@ -96,11 +71,12 @@ namespace Fiap.Web.AspNet5.Controllers
             if (String.IsNullOrEmpty(clienteModel.Nome))
             {
                 ViewBag.Mensagem = $"O nome do cliente é obrigatório!";
-
+                ComboRepresentantes();
                 return View(clienteModel);
             }
             else
             {
+                clienteRepository.Update(clienteModel);
                 TempData["Mensagem"] = $"O cliente {clienteModel.Nome} foi alterado com sucesso";
                 return RedirectToAction("Index", "Cliente");
                 //ViewBag.Cliente = clienteModel;  -> Nao Funciona quando utilizamos o RedirectToAction
@@ -113,16 +89,8 @@ namespace Fiap.Web.AspNet5.Controllers
         [HttpGet]
         public IActionResult Detalhe(int id)
         {
-           var clienteModel = new ClienteModel
-            {
-                ClienteId = 1,
-                Nome = "Flavio",
-                Email = "fmoreni@gmail.com",
-                DataNascimento = DateTime.Now,
-                Observacao = "OBS1"
-            };
 
-            return View(clienteModel);
+            return View(clienteRepository.FindByIdWithRepresentante(id));
         }
 
         [HttpPost]
@@ -139,6 +107,13 @@ namespace Fiap.Web.AspNet5.Controllers
 
             TempData["Mensagem"] = $"O cliente foi removido com sucesso!";
             return RedirectToAction("Index", "Cliente");
+        }
+
+        private void ComboRepresentantes()
+        {
+            var listaRepresentante = representanteRepository.FindAll();
+            var selectListaRepresentante = new SelectList(listaRepresentante, "RepresentanteId", "NomeRepresentante");
+            ViewBag.Representantes = selectListaRepresentante;
         }
 
     }
