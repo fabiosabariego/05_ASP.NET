@@ -1,17 +1,21 @@
-﻿using Fiap.Web.AspNet5.Models;
+﻿using AutoMapper;
+using Fiap.Web.AspNet5.Models;
 using Fiap.Web.AspNet5.Repository.Interface;
 using Fiap.Web.AspNet5.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace Fiap.Web.AspNet5.Controllers
 {
     public class LoginController : Controller
     {
         private readonly IUsuarioRepository usuariosRepository;
+        private readonly IMapper mapper;
 
-        public LoginController(IUsuarioRepository _usuariosRepository)
+        public LoginController(IUsuarioRepository _usuariosRepository, IMapper _mapper)
         {
             this.usuariosRepository = _usuariosRepository;
+            this.mapper = _mapper;
         }
 
         public IActionResult Index()
@@ -24,28 +28,43 @@ namespace Fiap.Web.AspNet5.Controllers
             if (ModelState.IsValid)
             {
                 /*
-                var usuarioLogado = usuariosRepository.Login(loginViewModel.UsuarioEmail, loginViewModel.UsuarioSenha);
+                var usuario = new UsuarioModel();
+                usuario.UsuarioSenha = loginViewModel.UsuarioSenha;
+                usuario.UsuarioEmail = loginViewModel.UsuarioEmail;
+                */
+
+                var usuario = mapper.Map<UsuarioModel>(loginViewModel);
+                var usuarioLogado = usuariosRepository.Login(usuario);
 
                 if (usuarioLogado == null || usuarioLogado.UsuarioId == 0)
                 {
+                    ViewBag.ErrorMessage = "Login ou Senha invalida!";
                     return View(nameof(Index));
                 }
                 else
                 {
-                    return RedirectToAction(nameof(Index), "Home");
-                }
-                */
+                   
+                    loginViewModel = mapper.Map<LoginViewModel>(usuarioLogado);
 
-                return RedirectToAction(nameof(Index), "Home");
+                    var vmJson = Newtonsoft.Json.JsonConvert.SerializeObject(loginViewModel);
+                    HttpContext.Session.SetString("usuarioLogado", vmJson);
+                    return RedirectToAction(nameof(Index), "Home");
+                    
+                }
 
             }
             else
             {
                 return View(nameof(Index));
             }
-                
-                        
 
+        }
+
+        [HttpGet]
+        public IActionResult Logoff()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Index), "Home");
         }
     }
 }

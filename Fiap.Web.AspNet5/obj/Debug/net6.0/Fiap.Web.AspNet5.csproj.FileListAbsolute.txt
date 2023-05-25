@@ -86,3 +86,5 @@ C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5\obj\Debug\net6.0\ref
 C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5\obj\Debug\net6.0\Fiap.Web.AspNet5.pdb
 C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5\obj\Debug\net6.0\Fiap.Web.AspNet5.genruntimeconfig.cache
 C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5\obj\Debug\net6.0\ref\Fiap.Web.AspNet5.dll
+C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5\bin\Debug\net6.0\Newtonsoft.Json.dll

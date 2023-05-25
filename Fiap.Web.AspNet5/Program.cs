@@ -1,6 +1,9 @@
+using AutoMapper;
 using Fiap.Web.AspNet5.Data;
+using Fiap.Web.AspNet5.Models;
 using Fiap.Web.AspNet5.Repository;
 using Fiap.Web.AspNet5.Repository.Interface;
+using Fiap.Web.AspNet5.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Web.AspNet5
@@ -14,6 +17,9 @@ namespace Fiap.Web.AspNet5
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // ****************************************************************************
+            builder.Services.AddSession();
+            // ****************************************************************************
 
             // ****************************************************************************
             // Condições Adicionadas na Aula para conectar ao Banco
@@ -30,6 +36,26 @@ namespace Fiap.Web.AspNet5
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             // ****************************************************************************
 
+
+            // ****************************************************************************
+            var mapperConfig = new AutoMapper.MapperConfiguration(c =>
+            {
+                c.AllowNullDestinationValues = true;
+                c.CreateMap<LoginViewModel, UsuarioModel>();
+                c.CreateMap<UsuarioModel, LoginViewModel>();
+
+                c.CreateMap<RepresentanteViewModel, RepresentanteModel>();
+                c.CreateMap<RepresentanteModel, RepresentanteViewModel>();
+                c.CreateMap<ClienteViewModel, ClienteModel>();
+
+                c.CreateMap<ClienteModel, ClienteViewModel>();
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            builder.Services.AddSingleton(mapper);
+            // ****************************************************************************
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -38,6 +64,10 @@ namespace Fiap.Web.AspNet5
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+
+            // ****************************************************************************
+            app.UseSession();
+            // ****************************************************************************
 
             app.UseRouting();
 
