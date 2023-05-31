@@ -14,6 +14,15 @@ namespace Fiap.Web.AspNet5.Data
 
         public DbSet<UsuarioModel> Usuarios { get; set; }
 
+        // Neste caso usamos 2 tabelas Muitos para Muitos, assim criamos a terceira tabela (intermediaria)
+        //-------------------------------------------------------------
+        public DbSet<ProdutoModel> Produtos { get; set; }
+
+        public DbSet<LojaModel> Lojas { get; set; }
+
+        public DbSet<ProdutoLojaModel> ProdutosLojas { get; set; }
+        //-------------------------------------------------------------
+
         public DataContext(DbContextOptions options) : base(options)
         {
 

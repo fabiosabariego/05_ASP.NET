@@ -34,6 +34,8 @@ namespace Fiap.Web.AspNet5
             builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             builder.Services.AddScoped<IRepresentanteRepository, RepresentanteRepository>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            builder.Services.AddScoped<ILojaRepository, LojaRepository>();
             // ****************************************************************************
 
 

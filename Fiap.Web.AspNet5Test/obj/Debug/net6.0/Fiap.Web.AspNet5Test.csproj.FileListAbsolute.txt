@@ -155,3 +155,4 @@ C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5Test\obj\Debug\net6.0
 C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5Test\obj\Debug\net6.0\Fiap.Web.AspNet5Test.pdb
 C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5Test\obj\Debug\net6.0\Fiap.Web.AspNet5Test.genruntimeconfig.cache
 C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5Test\obj\Debug\net6.0\ref\Fiap.Web.AspNet5Test.dll
+C:\Users\Fabio\Documents\GitHub\05_ASP.NET\Fiap.Web.AspNet5Test\bin\Debug\net6.0\AutoMapper.dll
