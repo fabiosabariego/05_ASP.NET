@@ -17,10 +17,7 @@ namespace Fiap.Web.AspNet5.Repository
         public IList<LojaModel> FindAll()
         {
 
-            var lojas = dataContext.Lojas
-                .Include(l => l.ProdutosLojas)
-                    .ThenInclude(p => p.Produto)
-                        .ToList();
+            var lojas = dataContext.Lojas.ToList();
 
             return lojas;
         }

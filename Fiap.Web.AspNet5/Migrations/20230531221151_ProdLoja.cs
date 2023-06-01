@@ -5,7 +5,7 @@
 namespace Fiap.Web.AspNet5.Migrations
 {
     /// <inheritdoc />
-    public partial class ProdutoLoja : Migration
+    public partial class ProdLoja : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,9 +78,9 @@ namespace Fiap.Web.AspNet5.Migrations
                 column: "LojaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProdutoLoja_ProdutoId",
+                name: "IX_ProdutoLoja_ProdutoId_LojaId",
                 table: "ProdutoLoja",
-                column: "ProdutoId");
+                columns: new[] { "ProdutoId", "LojaId" });
         }
 
         /// <inheritdoc />

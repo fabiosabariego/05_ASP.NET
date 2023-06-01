@@ -49,8 +49,16 @@ namespace Fiap.Web.AspNet5
                 c.CreateMap<RepresentanteViewModel, RepresentanteModel>();
                 c.CreateMap<RepresentanteModel, RepresentanteViewModel>();
                 c.CreateMap<ClienteViewModel, ClienteModel>();
-
                 c.CreateMap<ClienteModel, ClienteViewModel>();
+
+                c.CreateMap<LojaModel, LojaViewModel>();
+                c.CreateMap<LojaViewModel, LojaModel>();
+
+                c.CreateMap<ProdutoModel, ProdutoViewModel>();
+                c.CreateMap<ProdutoViewModel, ProdutoModel>();
+
+                c.CreateMap<ProdutoLojaModel, ProdutoLojaViewModel>();
+                c.CreateMap<ProdutoLojaViewModel, ProdutoLojaModel>();
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

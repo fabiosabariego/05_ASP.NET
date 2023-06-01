@@ -16,10 +16,7 @@ namespace Fiap.Web.AspNet5.Repository
 
         public IList<ProdutoModel> FindAll()
         {
-            var prod = dataContext.Produtos
-                .Include(p => p.ProdutosLojas) // inner join PRODUTO LOJA
-                    .ThenInclude(l => l.Loja)
-                        .ToList();
+            var prod = dataContext.Produtos.ToList();
 
             return prod;
         }
@@ -32,6 +29,13 @@ namespace Fiap.Web.AspNet5.Repository
                         .SingleOrDefault(p => p.ProdutoId == id);
 
             return prod;
+        }
+
+        public int Insert(ProdutoModel model)
+        {
+            dataContext.Produtos.Add(model);
+            dataContext.SaveChanges();
+            return model.ProdutoId;
         }
     }
 }

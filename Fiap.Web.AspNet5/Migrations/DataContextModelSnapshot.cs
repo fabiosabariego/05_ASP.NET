@@ -127,7 +127,7 @@ namespace Fiap.Web.AspNet5.Migrations
 
                     b.HasIndex("LojaId");
 
-                    b.HasIndex("ProdutoId");
+                    b.HasIndex("ProdutoId", "LojaId");
 
                     b.ToTable("ProdutoLoja");
                 });
@@ -215,13 +215,13 @@ namespace Fiap.Web.AspNet5.Migrations
             modelBuilder.Entity("Fiap.Web.AspNet5.Models.ProdutoLojaModel", b =>
                 {
                     b.HasOne("Fiap.Web.AspNet5.Models.LojaModel", "Loja")
-                        .WithMany()
+                        .WithMany("ProdutosLojas")
                         .HasForeignKey("LojaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Fiap.Web.AspNet5.Models.ProdutoModel", "Produto")
-                        .WithMany()
+                        .WithMany("ProdutosLojas")
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -229,6 +229,16 @@ namespace Fiap.Web.AspNet5.Migrations
                     b.Navigation("Loja");
 
                     b.Navigation("Produto");
+                });
+
+            modelBuilder.Entity("Fiap.Web.AspNet5.Models.LojaModel", b =>
+                {
+                    b.Navigation("ProdutosLojas");
+                });
+
+            modelBuilder.Entity("Fiap.Web.AspNet5.Models.ProdutoModel", b =>
+                {
+                    b.Navigation("ProdutosLojas");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,5 +7,7 @@ namespace Fiap.Web.AspNet5.Repository.Interface
         public IList<ProdutoModel> FindAll();
         public ProdutoModel? FindById(int id);
 
+        public int Insert(ProdutoModel model);
+
     }
 }
